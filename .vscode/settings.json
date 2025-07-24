@@ -1,0 +1,8 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  }, // 保存時にESlint　自動修正(可能なエラーのみ)
+  "files.autoSave": "onFocusChange",
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // デフォルトフォーマット指定
+  "editor.formatOnSave": true //保存時にフォーマット修正
+}
