@@ -2,6 +2,7 @@ import "./globals.css";
 import "react-notion-x/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 import "katex/dist/katex.min.css";
+import Header from "@/components/layouts/Header";
 
 export default function RootLayout({
   children,
@@ -10,7 +11,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-lime-200">{children}</body>
+      <body className="bg-lime-200">
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
