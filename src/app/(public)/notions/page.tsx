@@ -9,13 +9,12 @@ export default async function notionPostsPage({
   searchParams: Promise<SearchParams>;
 }) {
   const resolvedSearchParams = await searchParams;
-  console.log(resolvedSearchParams);
   const query = resolvedSearchParams.search || "";
-  console.log(query);
   const posts = query ? await searchNotionPosts(query) : await getNotionPosts();
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="w-full">
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl mb-12">学習メモ</h1>
+      <div className="flex justify-center my-6">
         <NotionPostsSearch />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

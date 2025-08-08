@@ -15,29 +15,32 @@ export default function NotionPostCard({notionPost}: NotionPostCardProps) {
   }, [notionPost.updatedAt]);
 
   return (
-    <Card className="hover:shadow-lg transition-shadow overflow-hidden">
-      <Link href={`/notions/${notionPost.id}`}>
-        <div className="flex">
-          <div className="w-1/5 flex items-center justify-center rounded-sm m-2">
-            <span className="text-5xl">{notionPost.emojiIcon}</span>
-          </div>
-          <div className="flex-1">
-            <CardHeader className="py-4">
-              <CardTitle className="line-clamp-2">{notionPost.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex gap-1 line-clamp-2 text-sm text-gray-500">
-                {notionPost.tags.map((tag) => (
-                  <Badge key={`${notionPost.id}-${tag}`}>{tag}</Badge>
-                ))}
-              </div>
-              <div className="text-right text-sm text-gray-500 ">
-                <time>{formattedDate}</time>
-              </div>
-            </CardContent>
-          </div>
+    <Card className="hover:shadow-lg transition-shadow overflow-hidden max-w-xl relative">
+      <Link href={`/notions/${notionPost.id}`} className="absolute inset-0" />
+      <div className="flex">
+        <div className="w-1/5 flex items-center justify-center rounded-sm m-2">
+          <span className="text-5xl">{notionPost.emojiIcon}</span>
         </div>
-      </Link>
+        <div className="flex-1">
+          <CardHeader className="py-4">
+            <CardTitle className="line-clamp-2">{notionPost.title}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex gap-1 line-clamp-2 text-sm text-gray-500">
+              {notionPost.tags.map((tag) => (
+                <Badge key={`${notionPost.id}-${tag}`}>
+                  <Link href={`/notions/tags/${tag}`} className="relative z-10">
+                    {tag}
+                  </Link>
+                </Badge>
+              ))}
+            </div>
+            <div className="text-right text-sm text-gray-500 ">
+              <time>{formattedDate}</time>
+            </div>
+          </CardContent>
+        </div>
+      </div>
     </Card>
   );
 }

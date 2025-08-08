@@ -3,6 +3,7 @@ import {notFound} from "next/navigation";
 import {Badge} from "@/components/ui/badge";
 import NotionPostPage from "@/components/notionPost/notionPostPage";
 import {IdParams} from "@/types/common";
+import Link from "next/link";
 
 export default async function PostPage({params}: IdParams) {
   const {id} = await params;
@@ -21,7 +22,9 @@ export default async function PostPage({params}: IdParams) {
           <span className="text-3xl font-bold">{notionPostInfo.title}</span>
           <div className="flex gap-1 text-sm text-gray-500">
             {notionPostInfo.tags.map((tag) => (
-              <Badge key={`${id}-${tag}`}>{tag}</Badge>
+              <Badge key={`${id}-${tag}`}>
+                <Link href={`/notions/tags/${tag}`}>{tag}</Link>
+              </Badge>
             ))}
           </div>
         </div>
