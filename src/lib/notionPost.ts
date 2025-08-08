@@ -89,7 +89,6 @@ export async function getNotionPostInfo(
   return {title, emojiIcon, tags, updatedAt};
 }
 
-// 検索機能を追加
 export async function searchNotionPosts(query: string): Promise<NotionPost[]> {
   const response = await notionHqClient.databases.query({
     database_id: process.env.DATABASE_ID!,
