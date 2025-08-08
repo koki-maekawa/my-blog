@@ -27,13 +27,11 @@ export default function NotionPostsSearch() {
   }, [debouncedSearch, router]);
 
   return (
-    <div className="my-4">
-      <Input
-        placeholder="キーワードを入力..."
-        className="w-full bg-white py-6 px-4 rounded-md"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-    </div>
+    <Input
+      placeholder="キーワードを入力..."
+      className="w-full max-w-xl bg-white py-6 px-4 rounded-md"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+    />
   );
 }
