@@ -1,4 +1,4 @@
-import {getNotionPost, getNotionPostInfo} from "@/lib/notionPost";
+import {getNotionPage, getNotionPageInfo} from "@/lib/notion";
 import {notFound} from "next/navigation";
 import {Badge} from "@/components/ui/badge";
 import NotionPostPage from "@/components/notionPost/notionPostPage";
@@ -7,8 +7,8 @@ import Link from "next/link";
 
 export default async function PostPage({params}: IdParams) {
   const {id} = await params;
-  const notionPost = await getNotionPost(id);
-  const notionPostInfo = await getNotionPostInfo(id);
+  const notionPost = await getNotionPage(id);
+  const notionPostInfo = await getNotionPageInfo(id);
 
   if (!notionPostInfo) {
     notFound();

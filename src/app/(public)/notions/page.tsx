@@ -1,6 +1,6 @@
 import PostCard from "@/components/notionPost/notionPostCard";
 import NotionPostsSearch from "@/components/notionPost/notionPostsSearch";
-import {getNotionPosts, searchNotionPosts} from "@/lib/notionPost";
+import {getNotionPagesInfo, searchNotionPagesInfo} from "@/lib/notion";
 import {SearchParams} from "@/types/common";
 
 export default async function notionPostsPage({
@@ -10,7 +10,9 @@ export default async function notionPostsPage({
 }) {
   const resolvedSearchParams = await searchParams;
   const query = resolvedSearchParams.search || "";
-  const posts = query ? await searchNotionPosts(query) : await getNotionPosts();
+  const posts = query
+    ? await searchNotionPagesInfo(query)
+    : await getNotionPagesInfo();
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl mb-12">学習メモ</h1>

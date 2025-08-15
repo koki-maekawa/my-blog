@@ -1,6 +1,6 @@
 "use client";
 import {NotionRenderer} from "react-notion-x";
-import {NotionPostPageProps} from "@/types/notionPost";
+import {NotionPostPageProps} from "@/types/notion";
 import {Code} from "react-notion-x/build/third-party/code";
 import Link from "next/link";
 import Image from "next/image";

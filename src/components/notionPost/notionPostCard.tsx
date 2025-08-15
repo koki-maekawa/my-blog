@@ -1,6 +1,6 @@
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
-import {NotionPostCardProps} from "@/types/notionPost";
+import {NotionPostCardProps} from "@/types/notion";
 import Link from "next/link";
 import {formatDistanceToNow} from "date-fns";
 import {ja} from "date-fns/locale";
