@@ -1,14 +1,15 @@
 "use client";
+
 import {NotionRenderer} from "react-notion-x";
-import {NotionPostPageProps} from "@/types/notion";
+import {NotionPageProps} from "@/types/notion";
 import {Code} from "react-notion-x/build/third-party/code";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function NotionPostPage({notionPost}: NotionPostPageProps) {
+export default function NotionPage({notionPage}: NotionPageProps) {
   return (
     <NotionRenderer
-      recordMap={notionPost}
+      recordMap={notionPage}
       fullPage={false}
       darkMode={false}
       components={{

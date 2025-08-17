@@ -1,9 +1,10 @@
 "use client";
+
 import {useState, useEffect} from "react";
 import {Input} from "@/components/ui/input";
 import {useRouter} from "next/navigation";
 
-export default function NotionPostsSearch() {
+export default function NotionsSearch() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const router = useRouter();
