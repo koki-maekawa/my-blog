@@ -1,4 +1,4 @@
-import PostCard from "@/components/notionPost/notionPostCard";
+import NotionPageInfoCard from "@/components/notion/notionPageInfoCard";
 import {searchNotionPagesInfo} from "@/lib/notion";
 import {TagParams} from "@/types/common";
 
@@ -10,7 +10,7 @@ export default async function notionTagPostsPage({params}: TagParams) {
       <h1 className="text-3xl mb-12">タグ：{tag}一覧</h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {posts.map((notionPost) => (
-          <PostCard key={notionPost.id} notionPost={notionPost} />
+          <NotionPageInfoCard key={notionPost.id} notionPageInfo={notionPost} />
         ))}
       </div>
     </div>
