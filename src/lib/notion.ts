@@ -1,3 +1,4 @@
+import "server-only";
 import {Client, isFullPage} from "@notionhq/client";
 import {NotionAPI} from "notion-client";
 import {cache} from "react";
