@@ -8,5 +8,5 @@ export type NotionPageInfo = {
   updatedAt: string;
 };
 
-export type NotionPostPageProps = {notionPost: ExtendedRecordMap};
-export type NotionPostCardProps = {notionPost: NotionPageInfo};
+export type NotionPageProps = {notionPage: ExtendedRecordMap};
+export type NotionPageInfoCardProps = {notionPageInfo: NotionPageInfo};
