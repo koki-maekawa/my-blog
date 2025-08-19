@@ -1,124 +1,94 @@
+import "server-only";
 import {Octokit} from "@octokit/rest";
+import type {GetResponseDataTypeFromEndpointMethod} from "@octokit/types";
+import {cache} from "react";
 
-// Octokitインスタンスを作成
+export const revalidate = 3600;
+const owner = "koki-maekawa";
+const repo = "TIL";
+
+// 公式GitHubクライアント
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
 
-const owner = "koki-maekawa";
-const repo = "TIL";
+// octokitレスポンスの型定義
+type RepoContentData = GetResponseDataTypeFromEndpointMethod<
+  typeof octokit.repos.getContent
+>;
 
-export async function getTILYears() {
-  try {
-    const path = "";
-    const rootDirResponse = await octokit.repos.getContent({
-      owner,
-      repo,
-      path,
-    });
-
-    if (!Array.isArray(rootDirResponse.data)) {
-      throw new Error("TIL is not a directory");
-    }
-
-    const years = rootDirResponse.data
-      .filter((item) => item.type === "dir" && /^\d{4}$/.test(item.name))
-      .map((yearDir) => ({
-        year: yearDir.name,
-      }));
-
-    return years;
-  } catch (error) {
-    console.error("Error fetching TIL years:", error);
-    throw new Error("Failed to fetch TIL years");
-  }
+// 判定関数
+function isYearDir(data: RepoContentData) {
+  if (!Array.isArray(data)) return [];
+  return data.filter(
+    (item) => item.type === "dir" && /^\d{4}$/.test(item.name)
+  );
 }
 
-export async function getTILMonthesInYear(year: string) {
-  try {
-    const path = `${year}`;
-    const yearDirResponse = await octokit.repos.getContent({
-      owner,
-      repo,
-      path,
-    });
-
-    if (!Array.isArray(yearDirResponse.data)) {
-      throw new Error("TIL year directory is not a directory");
-    }
-
-    const months = yearDirResponse.data
-      .filter((item) => item.type === "dir" && /^\d{2}$/.test(item.name))
-      .map((monthDir) => ({
-        month: monthDir.name,
-      }));
-
-    return months;
-  } catch (error) {
-    console.error(`Error fetching months for year ${year}:`, error);
-    throw new Error(`Failed to fetch months for year ${year}`);
-  }
+function isMonthDir(data: RepoContentData) {
+  if (!Array.isArray(data)) return [];
+  return data.filter(
+    (item) => item.type === "dir" && /^\d{2}$/.test(item.name)
+  );
 }
 
-export async function getTILDaysInMonth(year: string, month: string) {
-  try {
-    const path = `${year}/${month}`;
-    const monthDirResponse = await octokit.repos.getContent({
-      owner,
-      repo,
-      path,
-    });
-
-    if (!Array.isArray(monthDirResponse.data)) {
-      throw new Error("TIL is not a directory");
-    }
-
-    const files = monthDirResponse.data
-      .filter((item) => item.type === "file" && item.name.endsWith(".md"))
-      .map((file) => ({
-        tilDate: file.name.replace(".md", ""),
-      }));
-
-    return files;
-  } catch (error) {
-    console.error(`Error fetching files for ${year}/${month}:`, error);
-    throw new Error(`Failed to fetch files for ${year}/${month}`);
-  }
+function isDayFile(data: RepoContentData) {
+  if (!Array.isArray(data)) return [];
+  return data.filter(
+    (item) => item.type === "file" && item.name.endsWith(".md")
+  );
 }
 
-export async function getTILDailyReport(
-  year: string,
-  month: string,
-  day: string
-) {
-  try {
-    const path = `${year}/${month}/${day}.md`;
-    const response = await octokit.repos.getContent({
+function isDayFileContent(data: RepoContentData) {
+  if (Array.isArray(data)) return "";
+  if (data.type === "file" && data.name.endsWith(".md") && "content" in data)
+    return data;
+}
+
+// TILリポジトリから年度フォルダ名を取得
+export const getTILYears = cache(async () => {
+  const {data} = await octokit.repos.getContent({owner, repo, path: ""});
+
+  const yearDirs = isYearDir(data);
+  return yearDirs.map((yearDir) => ({name: yearDir.name}));
+});
+
+// TILリポジトリから月フォルダ名を取得
+export const getTILMonthesInYear = cache(async (year: string) => {
+  const {data} = await octokit.repos.getContent({owner, repo, path: year});
+
+  const monthDirs = isMonthDir(data);
+  return monthDirs.map((monthDir) => ({
+    name: monthDir.name,
+  }));
+});
+
+// TILリポジトリから日ファイル名を取得
+export const getTILDaysInMonth = cache(async (year: string, month: string) => {
+  const {data} = await octokit.repos.getContent({
+    owner,
+    repo,
+    path: `${year}/${month}`,
+  });
+
+  const dayFiles = isDayFile(data);
+  return dayFiles.map((dayFile) => ({
+    name: dayFile.name.replace(".md", ""),
+  }));
+});
+
+// TILリポジトリから日ファイル内容を取得
+export const getTILDailyReport = cache(
+  async (year: string, month: string, day: string) => {
+    const {data} = await octokit.repos.getContent({
       owner,
       repo,
-      path,
+      path: `${year}/${month}/${day}.md`,
     });
 
-    // ディレクトリでないことを確認
-    if (Array.isArray(response.data)) {
-      throw new Error(`${path} はディレクトリです`);
+    const dayFile = isDayFileContent(data);
+    if (dayFile) {
+      return Buffer.from(dayFile.content, "base64").toString("utf-8");
     }
-
-    // ファイルでcontentプロパティがあることを確認
-    if (response.data.type !== "file" || !("content" in response.data)) {
-      throw new Error(`${path} は有効なファイルではありません`);
-    }
-
-    // Base64デコード
-    const content = Buffer.from(response.data.content, "base64").toString(
-      "utf-8"
-    );
-    return content;
-  } catch (error) {
-    console.error(
-      `Error fetching daily report for ${year}/${month}/${day}:`,
-      error
-    );
-    throw new Error(`Failed to fetch daily report for ${year}/${month}/${day}`);
   }
-}
+);
