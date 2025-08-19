@@ -1,13 +1,14 @@
 import Link from "next/link";
+import {YearData} from "@/types/TIL";
 
-interface YearSectionProps {
-  year: string;
-}
-
-export default function TILDayCard({year}: YearSectionProps) {
+export default function TILYearCard({year}: YearData) {
   return (
-    <div className="border p-4">
-      <Link href={`/TIL/${year}`}>{`${year}年 日報`}</Link>
-    </div>
+    <Link href={`/TIL/${year}`}>
+      <div className="border border-solid rounded-md shadow-md py-4 px-6 sm:px-8 md:px-12 hover:shadow-lg transition-shadow duration-200">
+        <span className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">
+          {`${year}年 日報`}
+        </span>
+      </div>
+    </Link>
   );
 }
