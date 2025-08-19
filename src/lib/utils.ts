@@ -6,11 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-/**
- * パンくずを生成
- * @param pathName
- * @returns
- */
+// パンくずリスト作成
 export function generateBreadcrumbs(pathName: string) {
   const arrPathName = pathName.split("/").filter((x) => x !== "");
   const breadcrumbPaths = [
