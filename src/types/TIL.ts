@@ -1,24 +1,35 @@
-import {ExtendedRecordMap} from "notion-types";
-
-// NotionPost一覧ページで利用する型
-export type NotionPost = {
-  id: string;
-  emojiIcon: string;
-  title: string;
-  tags: string[];
-  updatedAt: string;
+// rootParams
+export type YearParams = {
+  params: Promise<{year: string}>;
 };
 
-// NotionPost詳細ページで利用する型
-export type NotionPostInfo = {
-  emojiIcon: string;
-  title: string;
-  tags: string[];
-  updatedAt: string;
+export type MonthParams = {
+  params: Promise<{
+    year: string;
+    month: string;
+  }>;
 };
 
-export type NotionPostCardProps = {notionPost: NotionPost};
+export type DayParams = {
+  params: Promise<{
+    year: string;
+    month: string;
+    day: string;
+  }>;
+};
 
-export type NotionPostDetailInfoProps = {notionPost: NotionPostInfo};
+// API
+export type YearData = {
+  year: string;
+};
 
-export type NotionPostPageProps = {notionPost: ExtendedRecordMap};
+export type MonthData = {
+  year: string;
+  month: string;
+};
+
+export type DayData = {
+  year: string;
+  month: string;
+  day: string;
+};
