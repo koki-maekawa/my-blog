@@ -12,13 +12,9 @@ import {
 import {DaySection} from "@/components/layouts/sidebar/TIL/DaySection";
 import {ChevronRight} from "lucide-react";
 import Link from "next/link";
+import {MonthData} from "@/types/TIL";
 
-interface MonthSectionProps {
-  year: string;
-  month: string;
-}
-
-export async function MonthSection({year, month}: MonthSectionProps) {
+export async function MonthSection({year, month}: MonthData) {
   const days = await getTILDaysInMonth(year, month);
 
   return (
@@ -39,10 +35,10 @@ export async function MonthSection({year, month}: MonthSectionProps) {
           <SidebarMenuSub>
             {days.map((dayData) => (
               <DaySection
-                key={dayData.tilDate}
+                key={dayData.name}
                 year={year}
                 month={month}
-                day={dayData.tilDate}
+                day={dayData.name}
               />
             ))}
           </SidebarMenuSub>

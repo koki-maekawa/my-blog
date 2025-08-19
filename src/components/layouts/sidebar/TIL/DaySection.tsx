@@ -1,13 +1,8 @@
 import Link from "next/link";
 import {SidebarMenuItem, SidebarMenuButton} from "@/components/ui/sidebar";
+import {DayData} from "@/types/TIL";
 
-interface DaySectionProps {
-  year: string;
-  month: string;
-  day: string;
-}
-
-export function DaySection({year, month, day}: DaySectionProps) {
+export function DaySection({year, month, day}: DayData) {
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild>

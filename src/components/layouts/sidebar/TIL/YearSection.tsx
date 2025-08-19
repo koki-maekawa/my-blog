@@ -12,12 +12,9 @@ import {
 import {MonthSection} from "@/components/layouts/sidebar/TIL/MonthSection";
 import {ChevronRight} from "lucide-react";
 import Link from "next/link";
+import {YearData} from "@/types/TIL";
 
-interface YearSectionProps {
-  year: string;
-}
-
-export async function YearSection({year}: YearSectionProps) {
+export async function YearSection({year}: YearData) {
   const months = await getTILMonthesInYear(year);
 
   return (
@@ -38,9 +35,9 @@ export async function YearSection({year}: YearSectionProps) {
           <SidebarMenuSub>
             {months.map((monthData) => (
               <MonthSection
-                key={monthData.month}
+                key={monthData.name}
                 year={year}
-                month={monthData.month}
+                month={monthData.name}
               />
             ))}
           </SidebarMenuSub>

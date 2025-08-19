@@ -8,7 +8,6 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarMenuSub,
-  SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
 import {
@@ -48,9 +47,7 @@ export async function AppSidebar() {
                 <CollapsibleContent>
                   <SidebarMenuSub>
                     {years.map((yearData) => (
-                      <SidebarMenuSubItem key={yearData.year}>
-                        <YearSection year={yearData.year} />
-                      </SidebarMenuSubItem>
+                      <YearSection key={yearData.name} year={yearData.name} />
                     ))}
                   </SidebarMenuSub>
                 </CollapsibleContent>
