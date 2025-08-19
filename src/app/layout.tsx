@@ -21,7 +21,7 @@ export default function RootLayout({
       <body>
         <SidebarProvider>
           <AppSidebar />
-          <SidebarInset>
+          <SidebarInset className="flex flex-1 flex-col overflow-hidden">
             <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
               <div className="flex items-center gap-2 px-4">
                 <SidebarTrigger className="-ml-1" />
@@ -32,7 +32,7 @@ export default function RootLayout({
                 <DynamicBreadcrumb />
               </div>
             </header>
-            <main className="container p-8">{children}</main>
+            <main className="flex-1 overflow-y-auto p-8">{children}</main>
           </SidebarInset>
         </SidebarProvider>
       </body>
