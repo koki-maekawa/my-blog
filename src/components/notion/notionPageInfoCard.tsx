@@ -19,7 +19,7 @@ export default function NotionPageInfoCard({
   }, [notionPageInfo.updatedAt]);
 
   return (
-    <Card className="hover:shadow-lg transition-shadow overflow-hidden max-w-xl relative">
+    <Card className="hover:shadow-lg transition-shadow overflow-hidden relative">
       <Link
         href={`/notions/${notionPageInfo.id}`}
         className="absolute inset-0"

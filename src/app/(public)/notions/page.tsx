@@ -21,7 +21,7 @@ export default async function notionsPage({
             学習メモ
           </h1>
         </div>
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="flex justify-center mb-12">
             <NotionsSearch />
           </div>
