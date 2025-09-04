@@ -62,9 +62,7 @@ export const getNotionPagesInfo = cache(async (): Promise<NotionPageInfo[]> => {
 // ページ内容取得
 export const getNotionPage = cache(
   async (pageId: string): Promise<ExtendedRecordMap> => {
-    console.log("クライアント確認", notionClient);
     const recordMap = await notionClient.getPage(pageId);
-    console.log("記事内容", recordMap);
     return recordMap;
   }
 );
